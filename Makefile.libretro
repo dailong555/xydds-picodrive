@@ -495,6 +495,19 @@ else ifeq ($(platform), miyoo)
 	CFLAGS += -fomit-frame-pointer -ffast-math -march=armv5te -mtune=arm926ej-s -D__GCW0__
 	HAVE_ARMv6 = 0
 	LOW_MEMORY = 1
+	
+# XYDDS
+else ifeq ($(platform), xydds)
+	TARGET := $(TARGET_NAME)_libretro.so
+	CC = /opt/xydds/usr/bin/arm-linux-gcc
+	AR = /opt/xydds/usr/bin/arm-linux-ar
+	SHARED := -shared -nostdlib
+	fpic := -fPIC
+	LIBM :=
+	CFLAGS += -fomit-frame-pointer -ffast-math -marm -mfpu=neon-vfpv4 -mfloat-abi=hard -D__GCW0__
+	CFLAGS += -DARM -mcpu=cortex-a7
+	HAVE_ARMv6 = 0
+	LOW_MEMORY = 1
 
 # Windows MSVC 2017 all architectures
 else ifneq (,$(findstring windows_msvc2017,$(platform)))
